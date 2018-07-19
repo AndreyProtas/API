@@ -1,8 +1,1 @@
-Get User
-http://kliker.webege.com/simpletodo_api/?controller=user&action=get&login=andrey
-
-Get All
-http://kliker.webege.com/simpletodo_api/?controller=user&action=all&login=andrey
-
-Set Status
-http://kliker.webege.com/simpletodo_api/?controller=user&action=set_status&timestamp=2016-03-29%2011:11:11&login=andrey&status=tret
+http://nd-kliker.ru/school_api/?controller=schedule&action=create&schedule[]=07/23/2018%2012:00:00&schedule[]=07/25/2018%2012:00:00&amount=5&duration=45&groupId=1&subjectId=4

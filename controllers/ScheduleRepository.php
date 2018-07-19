@@ -12,8 +12,23 @@ class crud
 		
 	}
 	
-	public function create($user_id,$name,$code)
+	public function create($groupId, $subjectId, $startdate, $duration, $schedule, $amount)
 	{
+		//Create lesson list
+		$lesson_counter = 0;
+		$week = 0;
+		$lessons = array();
+		while ($lesson_counter < $amount){
+			foreach ($schedule as &$value) 
+			{
+				$lesson_counter++;
+				$lessonDate = strtotime($value .' + '. $week * 7 .' days');
+				$lessons[$lesson_counter] = new DateTime(date('m/d/Y h:i:s',$lessonDate));
+				if($lesson_counter == $amount) break;
+			}
+			$week++;
+		}
+		
 		try
 		{
 			$mysqli = new mysqli($this->DB_host, $this->DB_user, $this->DB_pass, $this->DB_name);
@@ -21,27 +36,48 @@ class crud
 			if ($mysqli->connect_errno) {
 				return $mysqli->connect_error;
 			}
-		
-			/*$query = sprintf("SELECT * FROM users WHERE login = '".$login."'");
-			if ($result = $mysqli->query($query)) {
-				if(count($result->fetch_assoc()) > 0)
-				{
-					$result->free();
-					throw new Exception('User already exist!');
-				}
-			}
-		
-			$query = sprintf("INSERT INTO users (id,login,password,password2,nick,balance,status,timestamp,account_id,active) VALUES (NULL,'".$login."','".$password."','".$password2."','".$nick."',0,NULL,NULL,'".$game_id."',1)");
-			$result = $mysqli->query($query);
+			
+			foreach ($lessons as &$lesson) {
+	
+				$lessonStartDate = $lesson->format('Y-m-d h:i:s');
+				$lessonEndDate = $lesson->add(new DateInterval('PT'.$duration.'M'))->format('Y-m-d h:i:s');
+			
+				$parameters = true;
+				$parameters |= $mysqli->query("SET @lessonStartDate =  '".$lessonStartDate."';");
+				$parameters |= $mysqli->query("SET @lessonEndDate =  '".$lessonEndDate."';");
+				$parameters |= $mysqli->query("SET @subjectId =  '".$subjectId."';");
+				$parameters |= $mysqli->query("SET @groupId =  '".$groupId."';");
 
-			$query = sprintf("SELECT * FROM users WHERE login = '".$login."'");
-		
-			if ($result = $mysqli->query($query)) {
-				$row = $result->fetch_assoc();
-				$result->free();
+				if($parameters == false){
+					echo "Parameters were not created!";
+					return false;
+				}
+				
+				$callResult = $mysqli->query("CALL `GetScheduleByDate` (@lessonStartDate , @lessonEndDate , @subjectId , @groupId , @teacherId , @roomId , @isBusy);");
+				if($callResult == false){
+					echo "Call Failed!" . $mysqli->errno . ") " . $mysqli->error;
+					return false;
+				}
+			
+				$query = sprintf("SELECT @teacherId AS  `teacherId` , @roomId AS  `roomId` , @isBusy AS  `isGroupBusy` ;");
+			
+				if ($result = $mysqli->query($query)) {
+					$row = $result->fetch_assoc();
+					$result->free();
+				}
+				$roomText = $row["roomId"];
+				if($row["roomId"] == '0')
+					$roomText = "<strong>No Room!</strong>";
+				
+				$teacherText = $row["teacherId"];
+				if($row["teacherId"] == '0')
+					$teacherText = "<strong>No Teacher!</strong>";
+				
+				echo "Lesson for Group $groupId will Start at $lessonStartDate and End at $lessonEndDate in room $roomText and hosted by teacherid $teacherText<br>";
 			}
-			$mysqli->close();*/
-			return "All OK from Repo!!";
+			
+			$mysqli->close();
+			return $row;
 		}
 		catch(PDOException $e)
 		{
