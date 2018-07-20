@@ -22,7 +22,7 @@ class crud
 				return $mysqli->connect_error;
 			}
 		
-			$query = "SELECT * FROM teachers";
+			$query = "SELECT * FROM rooms";
 			
 			if ($result = $mysqli->query($query)) {
 				$rows = array();
@@ -44,7 +44,7 @@ class crud
 		}
 	}
 	
-	public function getCalendar($teacherId)
+	public function getCalendar($roomId)
 	{
 			$mysqli = new mysqli($this->DB_host, $this->DB_user, $this->DB_pass, $this->DB_name);
 			
@@ -52,7 +52,7 @@ class crud
 				return $mysqli->connect_error;
 			}
 		
-			$query = "SELECT * FROM teacher_schedules where TeacherId = ".$teacherId;
+			$query = "SELECT * FROM room_schedules where RoomId = ".$roomId;
 			
 			if ($result = $mysqli->query($query)) {
 				$rows = array();

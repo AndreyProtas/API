@@ -1,7 +1,7 @@
 <?php
-include_once "TeacherRepository.php";
+include_once "RoomRepository.php";
 
-class Teacher
+class Room
 {
 	private $_params;
 	private $_crud;
@@ -20,7 +20,7 @@ class Teacher
 
    public function GetCalendarAction()
    {
-		$teacherId = $this->_params['teacherId'];
+		$roomId = $this->_params['roomId'];
 
 		$success = $this->_crud->getCalendar($teacherId);
 		return $success;
