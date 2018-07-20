@@ -1,1 +1,7 @@
-http://nd-kliker.ru/school_api/?controller=schedule&action=create&schedule[]=07/23/2018%2012:00:00&schedule[]=07/25/2018%2012:00:00&amount=5&duration=45&groupId=1&subjectId=4
+Schedule
+http://nd-kliker.ru/school_api/?controller=schedule&action=create&schedule[]=07/23/2018%2012:00:00&schedule[]=07/25/2018%2012:00:00&amount=5&duration=45&groupId=1&subjectId=1&groupId=1
+
+Teacher
+http://nd-kliker.ru/school_api/?controller=teacher&action=get
+http://nd-kliker.ru/school_api/?controller=teacher&action=getCalendar&teacherId=1
+
