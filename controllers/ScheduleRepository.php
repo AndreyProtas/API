@@ -12,21 +12,28 @@ class crud
 		
 	}
 	
-	public function create($groupId, $subjectId, $startdate, $duration, $schedule, $amount)
+	public function create($groupId, $subjectId, $startdate, $startdate, $duration, $schedule, $amount)
 	{
-		//Create lesson list
-		$lesson_counter = 0;
-		$week = 0;
-		$lessons = array();
-		while ($lesson_counter < $amount){
-			foreach ($schedule as &$value) 
-			{
-				$lesson_counter++;
-				$lessonDate = strtotime($value .' + '. $week * 7 .' days');
-				$lessons[$lesson_counter] = new DateTime(date('m/d/Y h:i:s',$lessonDate));
-				if($lesson_counter == $amount) break;
+		try
+		{
+			//Based on Weekly schedule create lesson list
+			$lesson_counter = 0;
+			$week = 0;
+			$lessons = array();
+			while ($lesson_counter < $amount){
+				foreach ($schedule as &$value) 
+				{
+					$lesson_counter++;
+					$lessonDate = strtotime($value .' + '. $week * 7 .' days');
+					$lessons[$lesson_counter] = new DateTime(date('m/d/Y H:i:s',$lessonDate));
+					if($lesson_counter == $amount) break;
+				}
+				$week++;
 			}
-			$week++;
+		}
+		catch(Exception $e)
+		{
+			throw new Exception("Cannot create requested lessons list!");
 		}
 		
 		try
@@ -39,8 +46,8 @@ class crud
 			
 			foreach ($lessons as &$lesson) {
 	
-				$lessonStartDate = $lesson->format('Y-m-d h:i:s');
-				$lessonEndDate = $lesson->add(new DateInterval('PT'.$duration.'M'))->format('Y-m-d h:i:s');
+				$lessonStartDate = $lesson->format('Y-m-d H:i:s');
+				$lessonEndDate = $lesson->add(new DateInterval('PT'.$duration.'M'))->format('Y-m-d H:i:s');
 			
 				$parameters = true;
 				$parameters |= $mysqli->query("SET @lessonStartDate =  '".$lessonStartDate."';");
@@ -77,12 +84,11 @@ class crud
 			}
 			
 			$mysqli->close();
-			return $row;
+			return "OK!";
 		}
 		catch(PDOException $e)
 		{
-			echo $e->getMessage();	
-			return false;
+			throw $e;
 		}
 	}
 }
