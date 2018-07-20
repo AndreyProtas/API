@@ -1,5 +1,6 @@
 Schedule
-http://nd-kliker.ru/school_api/?controller=schedule&action=create&schedule[]=07/23/2018%2012:00:00&schedule[]=07/25/2018%2012:00:00&amount=5&duration=45&groupId=1&subjectId=1&groupId=1
+Назначить Учителя и Аудиторию для 5А класса. Предмет - Физика (id=2). 6 лекций по 45 минут, по Понедельникам (первая 07/23/2018 12:00:00) и Средам (лекция 07/25/2018 12:00:00) начало в 12 часов. 
+http://nd-kliker.ru/school_api/?controller=schedule&action=create&schedule[]=07/23/2018%2012:00:00&schedule[]=07/25/2018%2012:00:00&amount=6&duration=45&groupId=1&subjectId=2&groupId=1
 
 Teacher
 http://nd-kliker.ru/school_api/?controller=teacher&action=get
