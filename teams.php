@@ -26,7 +26,7 @@ $teams["4"]["Players"]["3"] = ["Name"=>"Alexandrova Ekaterina", "Image"=>"/img/p
 $teams["5"]["Players"]["1"] = ["Name"=>"Hurkacz Hubert", "Image"=>"/img/players/62323.png", "Forehand"=>"5", "Backhand"=>"1", "Serve"=>"3", "Footwork"=>"5"];
 $teams["5"]["Players"]["2"] = ["Name"=>"Humbert Ugo", "Image"=>"/img/players/63661.png", "Forehand"=>"1", "Backhand"=>"4", "Serve"=>"3", "Footwork"=>"2"];
 $teams["5"]["Players"]["3"] = ["Name"=>"Gauff Cori", "Image"=>"/img/players/63429.png", "Forehand"=>"4", "Backhand"=>"2", "Serve"=>"1", "Footwork"=>"4"];
-$teams["5"]["Players"]["3"] = ["Name"=>"Paula Tommy", "Image"=>"/img/players/65237.png", "Forehand"=>"5", "Backhand"=>"2", "Serve"=>"4", "Footwork"=>"3"];
+$teams["5"]["Players"]["4"] = ["Name"=>"Paula Tommy", "Image"=>"/img/players/65237.png", "Forehand"=>"5", "Backhand"=>"2", "Serve"=>"4", "Footwork"=>"3"];
 
 echo json_encode($teams);
 ?>
